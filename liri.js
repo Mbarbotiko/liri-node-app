@@ -2,15 +2,12 @@ require('dotenv').config();
 
 var keysFile = require('./keys.js');
 var request = require("request");
-
-
+var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
+var userInput = process.argv.slice(3);
 var liriCommands = process.argv[2];
 
-// for(var i=2;i<=liriCommands;i++){
-//figure out code to accept muliple word movies
-// }
 
 //do-what-it-says
 
@@ -19,12 +16,15 @@ switch (liriCommands) {
         getSpotify()
         break;
     case "my-tweets":
-       getMyTweets();
+        getMyTweets();
         break;
     case "movie-this":
-    getMovies();
+        getMovies();
         break;
-   default:
+    case "do-what-it-says":
+        getWhatItSays();
+        break;
+    default:
         console.log("Try entering one of these commands. 1. spotify-this-song, 2. my-tweets, 3. movie-this ")
 }
 
@@ -51,7 +51,7 @@ function getMyTweets() {
 
 function getSpotify() {
     var spotify = new Spotify(keysFile.spotify);
-    spotify.search({ type: 'track', query: 'barbie girl' }, function (err, data) {
+    spotify.search({ type: 'track', query: userInput }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
@@ -65,12 +65,12 @@ function getSpotify() {
 }
 
 function getMovies() {
-    var movieName = process.argv[3];
-    if (!movieName) {
-        movieName = "mr nobody"
+    var userInput = process.argv[3];
+    if (!userInput) {
+        userInput = "mr nobody"
     }
 
-    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    var queryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
 
     request(queryUrl, function (error, response, body) {
         var fix = JSON.parse(body)
@@ -90,3 +90,15 @@ function getMovies() {
 
 }
 
+function getWhatItSays() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error)
+
+        } console.log(data);
+        // function doThis(){
+        //     data=process.argv[3];}
+        //     doThis();
+
+    });
+}
