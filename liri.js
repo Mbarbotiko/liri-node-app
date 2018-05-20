@@ -5,7 +5,7 @@ var request = require("request");
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
-var userInput = process.argv.slice(3);
+var userInput = process.argv.slice(3);//.join("");
 var liriCommands = process.argv[2];
 
 
@@ -38,7 +38,7 @@ function getMyTweets() {
             for (var i = 0; i < tweets.length; i++) {
                 var myTweets = 'Username: ' + tweets[i].user.name + '||' + ' Latest Tweet Date & Time: ' + tweets[i].created_at + '||' + ' Tweet: ' + tweets[i].text
                 console.log(myTweets);
-                //console.log(tweets);
+                
             }
 
 
@@ -56,11 +56,18 @@ function getSpotify() {
             return console.log('Error occurred: ' + err);
         }
 
-        console.log(data);
-        console.log("Track: " + data.tracks.items);
-
-        //get artist name, track name, preview link of the song , the album its from
+        
+        var callMe=data.tracks.items
+        for (var i = 0; i<1; i++){
+            console.log("Artist: "+callMe[i].album.artists[0].name+"||"+"Song Title: "+callMe[i].name+"||"+"Song Preview: "+callMe[i].preview_url+"||"+"Album: "+callMe[i].album.name);
+           
+        }
     });
+
+
+//    * If no song is provided then your program will default to "The Sign" by Ace of Base.
+
+//spotify needs work returns info but isnt 100% correct, also needs  a default.
 
 }
 
@@ -99,6 +106,7 @@ function getWhatItSays() {
         // function doThis(){
         //     data=process.argv[3];}
         //     doThis();
+        //Stuck on this unsure.
 
     });
 }
