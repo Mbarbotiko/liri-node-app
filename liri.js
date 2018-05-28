@@ -8,6 +8,8 @@ var Twitter = require('twitter');
 var userInput = process.argv.slice(3);
 var liriCommands = process.argv[2];
 
+
+
 doWhatItSays();
 function doWhatItSays() {
 
@@ -66,9 +68,7 @@ function getSpotify() {
     });
 
 
-    //    * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
-    //spotify needs work returns info but isnt 100% correct, also needs  a default.
 
 }
 
