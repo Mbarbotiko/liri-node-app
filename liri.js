@@ -5,27 +5,28 @@ var request = require("request");
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
-var userInput = process.argv.slice(3);//.join("");
+var userInput = process.argv.slice(3);
 var liriCommands = process.argv[2];
 
+doWhatItSays();
+function doWhatItSays() {
 
-//do-what-it-says
-
-switch (liriCommands) {
-    case "spotify-this-song":
-        getSpotify()
-        break;
-    case "my-tweets":
-        getMyTweets();
-        break;
-    case "movie-this":
-        getMovies();
-        break;
-    case "do-what-it-says":
-        getWhatItSays();
-        break;
-    default:
-        console.log("Try entering one of these commands. 1. spotify-this-song, 2. my-tweets, 3. movie-this ")
+    switch (liriCommands) {
+        case "spotify-this-song":
+            getSpotify()
+            break;
+        case "my-tweets":
+            getMyTweets();
+            break;
+        case "movie-this":
+            getMovies();
+            break;
+        case "do-what-it-says":
+            getWhatItSays();
+            break;
+        default:
+            console.log("Try entering one of these commands. 1. spotify-this-song, 2. my-tweets, 3. movie-this ")
+    }
 }
 
 
@@ -38,7 +39,7 @@ function getMyTweets() {
             for (var i = 0; i < tweets.length; i++) {
                 var myTweets = 'Username: ' + tweets[i].user.name + '||' + ' Latest Tweet Date & Time: ' + tweets[i].created_at + '||' + ' Tweet: ' + tweets[i].text
                 console.log(myTweets);
-                
+
             }
 
 
@@ -56,18 +57,18 @@ function getSpotify() {
             return console.log('Error occurred: ' + err);
         }
 
-        
-        var callMe=data.tracks.items
-        for (var i = 0; i<1; i++){
-            console.log("Artist: "+callMe[i].album.artists[0].name+"||"+"Song Title: "+callMe[i].name+"||"+"Song Preview: "+callMe[i].preview_url+"||"+"Album: "+callMe[i].album.name);
-           
+
+        var callMe = data.tracks.items
+        for (var i = 0; i < 1; i++) {
+            console.log("Artist: " + callMe[i].album.artists[0].name + "||" + "Song Title: " + callMe[i].name + "||" + "Song Preview: " + callMe[i].preview_url + "||" + "Album: " + callMe[i].album.name);
+
         }
     });
 
 
-//    * If no song is provided then your program will default to "The Sign" by Ace of Base.
+    //    * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
-//spotify needs work returns info but isnt 100% correct, also needs  a default.
+    //spotify needs work returns info but isnt 100% correct, also needs  a default.
 
 }
 
@@ -102,11 +103,15 @@ function getWhatItSays() {
         if (error) {
             return console.log(error)
 
-        } console.log(data);
-        // function doThis(){
-        //     data=process.argv[3];}
-        //     doThis();
-        //Stuck on this unsure.
+        }
+        var dataArr=(data.split(','));
+        liriCommands=dataArr[0];
+        userInput=dataArr[1];
+        var input=liriCommands+userInput
+        doWhatItSays(input);
+
+        
 
     });
 }
+
